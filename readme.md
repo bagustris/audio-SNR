@@ -43,7 +43,8 @@ Example of `estimate_snr.py`:
 
 ```bash
 $ python estimate_snr.py --input data/16_bit/output_mixed/20dB.wav 
-Estimated SNR: 15.223409099713713
+Estimated SNR: 22.589152898412486
+```
 
 ## Dataset
 
