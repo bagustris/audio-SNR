@@ -1,4 +1,4 @@
-# Mixing an audio file with a noise file at any Signal-to-Noise Ratio
+# Mixing and Estimate audio file with a noise file at any Signal-to-Noise Ratio
 The script `create_mixed_audio_file.py` and `create_mixed_audio_file_with_soundfile.py` can mix an audio file with a noise file at any Signal-to-Noise Ratio (SNR). 
 
 You can listen to the results of [mixtures](/data/16_bit/output_mixed) of the [clean voice](data/16_bit/source_clean) and the [noise](data/16_bit/source_noise).
