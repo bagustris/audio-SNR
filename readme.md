@@ -4,29 +4,7 @@ The script `create_mixed_audio_file.py` and `create_mixed_audio_file_with_soundf
 You can listen to the results of [mixtures](/data/16_bit/output_mixed) of the [clean voice](data/16_bit/source_clean) and the [noise](data/16_bit/source_noise).
 
 ## Installation
-- Python3.5+
-- macOS
-
-### Setup
-I recommend to install [Pipenv](https://github.com/pypa/pipenv) for making set-up easy before proceeding:
-
-If you're on macOS, you can install Pipenv easily with Homebrew:
-
-```
-$ brew install pipenv
-```
-
-After installing Pipenv, you run the following command to build a virtualenv and install packages listed in `Pipfile.lock`.
-
-```
-$ pipenv install
-```
-
-Then, you can run the following command to activate a virtualenv.
-
-```
-$ pipenv shell
-```
+No need to install, just install the necessary libraries in each python file if you don't have them.
 
 ### File format
 To use this code, the format of source waveforms is as follows.
@@ -51,26 +29,23 @@ After activating a virtualenv, you can run the files to mix an audio file with a
 
 Example of `create_mixed_audio_file.py`: 
 
-```
-python create_mixed_audio_file.py --clean_file ~/workspace/audio-SNR/data/16_bit/source_clean/arctic_a0001.wav --noise_file ~/workspace/audio-SNR/data/16_bit/source_noise/ch01.wav --snr 0 --output_mixed_file ~/workspace/audio-SNR/data/16_bit/output_mixed/0dB.wav
+```bash
+$ python3 create_mixed_audio_file.py --clean_file ./data/16_bit/source_clean/arctic_a0001.wav --noise_file ./data/16_bit/source_noise/ch01.wav --snr 20 --output_mixed_file ./data/16_bit/output_mixed/20dB.wav
 ```
 
 Example of `create_mixed_audio_file_with_soundfile.py`:
 
+```bash
+$ python3 create_mixed_audio_file_with_soundfile.py --clean_file ./data/64_bit/source_clean/arctic_a0001_64bit.wav --noise_file ./data/64_bit/source_noise/ch01_64bit.wav --snr 0 --output_mixed_file ./data/64_bit/output_mixed/0dB.wav
 ```
-python create_mixed_audio_file_with_soundfile.py --clean_file ~/workspace/audio-SNR/data/64_bit/source_clean/arctic_a0001_64bit.wav --noise_file ~/workspace/audio-SNR/data/64_bit/source_noise/ch01_64bit.wav --snr 0 --output_mixed_file ~/workspace/audio-SNR/data/64_bit/output_mixed/0dB.wav
-```
+
+Example of `estimate_snr.py`:
+
+```bash
+$ python estimate_snr.py --input data/16_bit/output_mixed/20dB.wav 
+Estimated SNR: 15.223409099713713
 
 ## Dataset
 
 - [Voices](http://festvox.org/cmu_arctic/) - CMU_ARCTIC speech synthesis databases
 - [Noises](https://zenodo.org/record/1227121#.W2wUVNj7TUI) - DEMAND: a collection of multi-channel recordings of acoustic noise in diverse environments
-
-## Detail
-There is a detail about `create_mixed_audio_file.py` on my post (in Japanese).
-
-[https://engineering.linecorp.com/ja/blog/voice-waveform-arbitrary-signal-to-noise-ratio-python/](https://engineering.linecorp.com/ja/blog/voice-waveform-arbitrary-signal-to-noise-ratio-python/)
-
-There is a detail about `create_mixed_audio_file.py` on my post (in Korean).
-
-[https://engineering.linecorp.com/ko/blog/voice-waveform-arbitrary-signal-to-noise-ratio-python/](https://engineering.linecorp.com/ko/blog/voice-waveform-arbitrary-signal-to-noise-ratio-python/)
