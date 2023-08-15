@@ -1,12 +1,30 @@
 import numpy as np
-import scipy.io.wavfile as wavfile
+import audiofile
 import matplotlib.pyplot as plt
 from scipy.signal.windows import hamming
 import argparse
 
+
 class SNREstimator:
-    def __init__(self, input_file, window_size, hop_size):
-        self.sample_rate, self.audio_data = wavfile.read(input_file)
+    """Estimate SNR from audio signal using log energy and energy thresholds
+    Args:
+        input_data (ndarray): Input audio signal
+        sample_rate (int): Sampling rate of input audio signal
+        window_size (int): Window size in samples
+        hop_size (int): Hop size in samples
+        
+        Returns: 
+        object: SNREstimator object
+        estimated_snr (float): Estimated SNR in dB, extracted from SNREstimator.estimate_snr()
+        
+        Usage:
+        >>> input_data, sample_rate = audiofile.read('input.wav')
+        >>> snr_estimator = SNREstimator(input_data, sample_rate, window_size=320, hop_size=160)
+        >>> estimated_snr, log_energies, energy_threshold_low, energy_threshold_high = snr_estimator.estimate_snr() 
+    """
+    def __init__(self, input_data, sample_rate, window_size, hop_size):
+        self.audio_data = input_data
+        self.sample_rate = sample_rate
         self.frame_length = window_size
         self.hop_length = hop_size
 
@@ -51,13 +69,15 @@ class SNREstimator:
 
 def main():
     parser = argparse.ArgumentParser(description='Estimate SNR from audio signal')
-    parser.add_argument('--input', required=True, help='Input audio file in WAV format')
-    parser.add_argument('--window_size', type=int, default=int(0.02 * 16000), help='Window size in samples (default: 320)')
-    parser.add_argument('--hop_size', type=int, default=int(0.01 * 16000), help='Hop size in samples (default: 160)')
-    parser.add_argument('--plot', action='store_true', help='Plot log energy and energy thresholds')
+    parser.add_argument('-i', '--input', required=True, help='Input audio file in WAV format')
+    parser.add_argument('-ws', '--window_size', type=int, default=int(0.02 * 16000), help='Window size in samples (default: 320)')
+    parser.add_argument('-hs', '--hop_size', type=int, default=int(0.01 * 16000), help='Hop size in samples (default: 160)')
+    parser.add_argument('-p', '--plot', action='store_true', help='Plot log energy and energy thresholds')
     args = parser.parse_args()
 
-    snr_estimator = SNREstimator(args.input, args.window_size, args.hop_size)
+    input_data, sample_rate = audiofile.read(args.input)
+    snr_estimator = SNREstimator(
+        input_data, sample_rate, args.window_size, args.hop_size)
     estimated_snr, log_energies, energy_threshold_low, energy_threshold_high = snr_estimator.estimate_snr()
 
     print("Estimated SNR:", estimated_snr)
